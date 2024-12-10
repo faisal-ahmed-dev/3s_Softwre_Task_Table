@@ -1,15 +1,14 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function NotFound() {
-  const router = useRouter();
 
   useEffect(() => {
-      router.replace("/");
+      redirect("/");
  
-  }, [router]);
+  }, []);
 
   return (
     <div className="h-screen flex flex-col items-center justify-center bg-gray-100 text-gray-800">
@@ -28,7 +27,7 @@ export default function NotFound() {
 
       <div className="mt-6">
         <button
-          onClick={() => router.replace("/")}
+          onClick={() => redirect("/")}
           className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition duration-300"
         >
           Go to Companies Now
