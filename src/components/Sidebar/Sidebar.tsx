@@ -1,5 +1,4 @@
-"use client";
-
+"use client"
 import React, { useState } from "react";
 import Link from "next/link";
 import { FaBars, FaTimes } from "react-icons/fa";
@@ -162,7 +161,7 @@ const Sidebar: React.FC = () => {
                 defaultActiveLink="/companies"
                 links={[
                   { href: "/business/departments", label: "Groups" },
-                  { href: "/companies", label: "Companies" },
+                  { href: "/", label: "Companies" },
                   { href: "/business/brands", label: "Brands" },
                   { href: "/business/outlets", label: "Outlets" },
                   { href: "/business/warehouses", label: "Warehouses" },

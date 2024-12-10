@@ -2,7 +2,7 @@ import React, { ChangeEvent } from 'react';
 import Input from './Input';
 import Select from './Select';
 import Button from './Button';
-import { FilterParams } from '../types/company';
+import { FilterParams } from '../../types/company';
 import { Plus, Search, Trash2 } from 'lucide-react';
 
 const Filters: React.FC<{

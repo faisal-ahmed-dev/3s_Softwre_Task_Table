@@ -32,7 +32,7 @@ const SidebarDropdown: React.FC<SidebarDropdownProps> = ({
       {/* Dropdown Toggle */}
       <button
         className={`flex items-center justify-between  w-full hover:text-secondary text-dark ${
-          open ? "text-secondary border-l-4 border-secondary" : ""
+          open ? "text-secondary border-l-4 rounded-l-sm  border-secondary" : ""
         }`}
         onClick={() => setOpen(!open)}
       >

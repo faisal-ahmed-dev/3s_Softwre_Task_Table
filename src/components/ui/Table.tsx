@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { FaEdit, FaTrash } from "react-icons/fa";
-import { Company } from "../types/company";
+import { Company } from "../../types/company";
 import { Check, Pencil, Trash2, X } from "lucide-react";
 import Spinner from "./Spinner";
 

@@ -3,7 +3,7 @@ import Button from './Button';
 import Select from './Select';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-interface PaginationControlsProps {
+interface PaginationProps {
   start: number;
   length: number;
   totalRecords: number;
@@ -15,7 +15,7 @@ interface PaginationControlsProps {
   onPageSizeChange: (newSize: number) => void;
 }
 
-const PaginationControls: React.FC<PaginationControlsProps> = ({
+const Pagination: React.FC<PaginationProps> = ({
   start,
   length,
   totalRecords,
@@ -113,4 +113,4 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
   );
 };
 
-export default React.memo(PaginationControls);
+export default React.memo(Pagination);
