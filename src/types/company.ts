@@ -1,5 +1,3 @@
-// src/types/company.ts
-
 export interface FilterGroup {
     disabled: boolean;
     group: string | null;
@@ -68,7 +66,7 @@ export interface FilterGroup {
     searchActiveId: number;
     page: number;
     pageSize: number;
-    availablePageSizes: string[]; // Keep as string[]
+    availablePageSizes: string[];
     draw: any;
     start: number;
     length: number;

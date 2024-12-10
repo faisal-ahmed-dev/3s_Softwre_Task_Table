@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# **3S Software Task - Table Management Application**  
 
-## Getting Started
+[![GitHub Repository](https://img.shields.io/badge/GitHub-Link-blue)](https://github.com/faisal-ahmed-dev/3s_Softwre_Task_Table)
 
-First, run the development server:
 
+## **Installation**  
+
+### **1. Clone the Repository**  
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/faisal-ahmed-dev/3s_Softwre_Task_Table.git
+cd 3s_Softwre_Task_Table
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### **2. Install Dependencies**  
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Run the following command to install all required dependencies:  
+```bash
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### **3. Install Peer Dependencies**  
 
-## Learn More
+Ensure that the peer dependencies are installed using the following command:  
+```bash
+npm install --legacy-peer-deps
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## **Environment Variables**  
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Create a `.env` file in the root of the project and add the following variables:  
 
-## Deploy on Vercel
+```env
+NEXT_PUBLIC_API_BASE_URL=YOUR_API_BASE_URL
+NEXT_PUBLIC_API_TOKEN=YOUR_JWT_TOKEN
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Replace `YOUR_API_BASE_URL` and `YOUR_JWT_TOKEN` with your actual API URL and JWT token.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## **Running the Application**  
+
+### **Development Server**  
+```bash
+npm run dev
+```
+
+The application will be available at `http://localhost:3000`.  
+
+
+---
+
+## **Contact**  
+For any questions or feedback, feel free to reach out:
+
+**Faisal Ahmed**  
+📧 Email: faisalksabd999@gmail.com  
+🌐 GitHub: [@faisal-ahmed-dev](https://github.com/faisal-ahmed-dev)  
+

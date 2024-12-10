@@ -1,5 +1,4 @@
 import React, { ChangeEvent } from 'react';
-import Button from './Button';
 import Select from './Select';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -55,7 +54,6 @@ const Pagination: React.FC<PaginationProps> = ({
 
   return (
     <div className="flex flex-wrap items-center justify-between p-4 gap-4">
-      {/* Rows Per Page Selector */}
       <div className="flex items-center space-x-2">
         <span>Rows per page</span>
         <Select
@@ -70,7 +68,6 @@ const Pagination: React.FC<PaginationProps> = ({
         <span>entries</span>
       </div>
 
-      {/* Display Current Range */}
       <div className="text-sm">
         {length > 0 && (
           <>
@@ -79,10 +76,8 @@ const Pagination: React.FC<PaginationProps> = ({
         )}
       </div>
 
-      {/* Pagination Buttons */}
       <div className="flex items-center space-x-2">
 
-        {/* Previous Page */}
         <button
           onClick={() => onPageChange(page - 1)}
           disabled={page === 1}
@@ -93,10 +88,8 @@ const Pagination: React.FC<PaginationProps> = ({
           <ChevronLeft />
         </button>
 
-        {/* Page Number Buttons */}
         {renderPageButtons()}
 
-        {/* Next Page */}
         <button
           onClick={() => onPageChange(page + 1)}
           disabled={page >= totalPages}

@@ -84,5 +84,4 @@ const Table: React.FC<TableProps> = ({
   );
 };
 
-// Memoize to prevent unnecessary re-renders
 export default React.memo(Table);

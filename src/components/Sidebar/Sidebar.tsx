@@ -1,6 +1,5 @@
 "use client"
 import React, { useState } from "react";
-import Link from "next/link";
 import { FaBars, FaTimes } from "react-icons/fa";
 import SidebarItem from "./SidebarItem";
 import SidebarDropdown from "./SidebarDropdown";
@@ -109,7 +108,6 @@ const Sidebar: React.FC = () => {
 
       {/* Mobile Sidebar */}
       <div className="md:hidden">
-        {/* Menu Button */}
         <button
           onClick={() => setIsOpen(true)}
           className="m-2 p-1 border border-primary text-primary rounded-md flex items-center hover:bg-secondary"
@@ -117,13 +115,11 @@ const Sidebar: React.FC = () => {
           <FaBars />
         </button>
 
-        {/* Mobile Sidebar Drawer */}
         <div
           className={`fixed inset-y-0 left-0 w-64 bg-white shadow-lg transform ${
             isOpen ? "translate-x-0" : "-translate-x-full"
           } transition-transform duration-300 ease-in-out z-50`}
         >
-          {/* Header */}
           <div className="p-4 text-xl font-bold border-b flex justify-between items-center">
             GENPOS
             <button
@@ -134,7 +130,6 @@ const Sidebar: React.FC = () => {
             </button>
           </div>
 
-          {/* Navigation Menu */}
           <nav className="mt-4 flex-1">
             <ul>
               <SidebarItem
@@ -207,7 +202,6 @@ const Sidebar: React.FC = () => {
           </nav>
         </div>
 
-        {/* Background Overlay */}
         {isOpen && (
           <div
             className="fixed inset-0 bg-black opacity-50"

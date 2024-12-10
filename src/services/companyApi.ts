@@ -1,5 +1,3 @@
-// src/utils/api.ts
-
 import axios, { AxiosError } from "axios";
 import {
   CompanyResponse,
@@ -25,7 +23,6 @@ api.interceptors.response.use(
   }
 );
 
-// Fetch initial filter options via GET request
 export const fetchInitialData = async (): Promise<InitialDataResponse> => {
   try {
     const response = await api.get<InitialDataResponse>("/api/Company/List");
@@ -40,24 +37,26 @@ export const fetchInitialData = async (): Promise<InitialDataResponse> => {
   }
 };
 
-// Fetch company list via POST request with filters
 export const getCompanies = async (
-  filters: FilterParams
+  filters: Partial<FilterParams>
 ): Promise<CompanyResponse> => {
   const payload = {
-    searchGroupId: filters.searchGroupId,
-    searchCompanyName: filters.searchCompanyName,
-    searchVatNumber: filters.searchVatNumber,
-    searchActiveId: filters.searchActiveId,
-    page: filters.page,
-    pageSize: filters.pageSize,
-    availablePageSizes: filters.availablePageSizes,
-    draw: filters.draw,
-    start: filters.start,
-    length: filters.length,
+    searchGroupId: filters.searchGroupId ?? null,
+    searchCompanyName: filters.searchCompanyName ?? null,
+    searchVatNumber: filters.searchVatNumber ?? null,
+    searchActiveId: filters.searchActiveId ?? null,
+    page: filters.page ?? null,
+    pageSize: filters.pageSize ?? null,
+    availablePageSizes: filters.availablePageSizes ?? null,
+    draw: filters.draw ?? null,
+    start: filters.start ?? null,
+    length: filters.length ?? null,
   };
   try {
-    const response = await api.post<CompanyResponse>("/api/Company/List", payload);
+    const response = await api.post<CompanyResponse>(
+      "/api/Company/List",
+      payload
+    );
     return response.data;
   } catch (error: AxiosError | unknown) {
     if (error instanceof AxiosError) {

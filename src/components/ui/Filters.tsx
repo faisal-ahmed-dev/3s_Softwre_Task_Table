@@ -25,7 +25,7 @@ const Filters: React.FC<{
           <Input
               label="Company Name"
               name="searchCompanyName"
-              value={filters.searchCompanyName}
+              value={filters.searchCompanyName ?? ''}
               onChange={handleChange}
               placeholder="Enter company name"
           />
@@ -40,7 +40,7 @@ const Filters: React.FC<{
           <Input
               label="VAT Number"
               name="searchVatNumber"
-              value={filters.searchVatNumber}
+              value={filters.searchVatNumber ?? ''}
               onChange={handleChange}
               placeholder="Enter VAT number"
           />

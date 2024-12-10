@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import React, { useEffect, useState, useCallback, useMemo } from 'react';
-import { getCompanies } from '../services/api';
+import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import { Company, FilterParams } from '../types/company';
+import { getCompanies } from '../services/companyApi';
+import { Plus } from 'lucide-react';
+import Pagination from '@/components/ui/Pagination';
 import Filters from '@/components/ui/Filters';
 import Table from '@/components/ui/Table';
-import PaginationControls from '@/components/ui/Pagination';
-import { Plus } from 'lucide-react';
 
 interface CompaniesProps {
   initialGroups: { value: string; text: string }[];
@@ -14,6 +14,7 @@ interface CompaniesProps {
   initialPageSizes: number[];
   initialCompanies: Company[];
   initialTotalRecords: number;
+  initialFilters: Partial<FilterParams>;
 }
 
 const Companies: React.FC<CompaniesProps> = ({
@@ -21,41 +22,36 @@ const Companies: React.FC<CompaniesProps> = ({
   initialActiveOptions,
   initialPageSizes,
   initialCompanies,
-  initialTotalRecords
+  initialTotalRecords,
+  initialFilters,
 }) => {
-  // Initialize state with server-provided data
   const [companies, setCompanies] = useState<Company[]>(initialCompanies);
   const [totalRecords, setTotalRecords] = useState<number>(initialTotalRecords);
-  const [groups, setGroups] = useState<{ value: string; text: string }[]>(initialGroups);
-  const [activeOptions, setActiveOptions] = useState<{ value: string; text: string }[]>(initialActiveOptions);
-  const [pageSizes, setPageSizes] = useState<number[]>(initialPageSizes);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [groups, setGroups] = useState(initialGroups);
+  const [activeOptions, setActiveOptions] = useState(initialActiveOptions);
+  const [pageSizes, setPageSizes] = useState(initialPageSizes);
+  const [loading, setLoading] = useState(false);
 
   const [filters, setFilters] = useState<FilterParams>({
-    searchGroupId: 0,
-    searchCompanyName: '',
-    searchVatNumber: '',
-    searchActiveId: 0,
-    page: 1,
-    pageSize: 25,
-    availablePageSizes: initialPageSizes,
-    draw: null,
-    start: 0,
-    length: 25,
+    searchGroupId: initialFilters.searchGroupId ?? 0,
+    searchCompanyName: initialFilters.searchCompanyName ?? '',
+    searchVatNumber: initialFilters.searchVatNumber ?? '',
+    searchActiveId: initialFilters.searchActiveId ?? 0,
+    page: initialFilters.page ?? 1,
+    pageSize: initialFilters.pageSize ?? 25,
+    availablePageSizes: initialFilters.availablePageSizes ?? ['15','25','50','100'],
+    draw: initialFilters.draw ?? null,
+    start: initialFilters.start ?? 0,
+    length: initialFilters.length ?? 25,
   });
 
+  
+
   const [appliedFilters, setAppliedFilters] = useState<FilterParams>({
-    searchGroupId: 0,
-    searchCompanyName: '',
-    searchVatNumber: '',
-    searchActiveId: 0,
-    page: 1,
-    pageSize: 25,
-    availablePageSizes: initialPageSizes,
-    draw: null,
-    start: 0,
-    length: 25,
+    ...filters
   });
+
+  const initialRender = useRef(true);
 
   const fetchCompaniesCallback = useCallback(async (params: FilterParams) => {
     setLoading(true);
@@ -70,27 +66,24 @@ const Companies: React.FC<CompaniesProps> = ({
     }
   }, []);
 
-  // Fetch companies whenever appliedFilters change
   useEffect(() => {
-    if (appliedFilters !== null) {
-      fetchCompaniesCallback(appliedFilters);
+    if (initialRender.current) {
+      initialRender.current = false;
+      return;
     }
+    fetchCompaniesCallback(appliedFilters);
   }, [appliedFilters, fetchCompaniesCallback]);
 
-  const handleInputChange = useCallback(
-    (name: string, value: string) => {
-      const numericFields = ['searchGroupId', 'searchActiveId'];
-      const isNumeric = numericFields.includes(name);
-      setFilters(prev => ({
-        ...prev,
-        [name]: isNumeric ? (value === '' ? 0 : parseInt(value, 10)) : value,
-      }));
-    },
-    []
-  );
+  const handleInputChange = useCallback((name: string, value: string) => {
+    const numericFields = ['searchGroupId', 'searchActiveId'];
+    const isNumeric = numericFields.includes(name);
+    setFilters((prev) => ({
+      ...prev,
+      [name]: isNumeric ? (value === '' ? 0 : parseInt(value, 10)) : value,
+    }));
+  }, []);
 
   const handleSearch = useCallback(() => {
-    // Apply current filters
     setAppliedFilters({
       ...filters,
       page: 1,
@@ -107,7 +100,7 @@ const Companies: React.FC<CompaniesProps> = ({
       searchActiveId: 0,
       page: 1,
       pageSize: 25,
-      availablePageSizes: [15, 25, 50, 100],
+      availablePageSizes: ['15','25','50','100'],
       draw: null,
       start: 0,
       length: 25,
@@ -116,37 +109,32 @@ const Companies: React.FC<CompaniesProps> = ({
     setAppliedFilters(clearedFilters);
   }, []);
 
-  const handlePageChange = useCallback(
-    (newPage: number) => {
-      const totalPages = Math.ceil(totalRecords / appliedFilters.pageSize);
-      if (newPage < 1 || newPage > totalPages) return;
+  const handlePageChange = useCallback((newPage: number) => {
+    const totalPages = Math.ceil(totalRecords / appliedFilters.pageSize);
+    if (newPage < 1 || newPage > totalPages) return;
+    setAppliedFilters((prev) => ({
+      ...prev,
+      page: newPage,
+      start: (newPage - 1) * prev.pageSize,
+      length: prev.pageSize,
+    }));
+  }, [appliedFilters.pageSize, totalRecords]);
 
-      setAppliedFilters(prev => ({
-        ...prev,
-        page: newPage,
-        start: (newPage - 1) * prev.pageSize,
-        length: prev.pageSize,
-      }));
-    },
-    [appliedFilters.pageSize, totalRecords]
+  const handlePageSizeChange = useCallback((newSize: number) => {
+    if (isNaN(newSize)) return;
+    setAppliedFilters((prev) => ({
+      ...prev,
+      pageSize: newSize,
+      start: 0,
+      page: 1,
+      length: newSize,
+    }));
+  }, []);
+
+  const totalPages = useMemo(
+    () => Math.ceil(totalRecords / appliedFilters.pageSize),
+    [totalRecords, appliedFilters.pageSize]
   );
-
-  const handlePageSizeChange = useCallback(
-    (newSize: number) => {
-      if (isNaN(newSize)) return;
-
-      setAppliedFilters(prev => ({
-        ...prev,
-        pageSize: newSize,
-        start: 0,
-        page: 1,
-        length: newSize,
-      }));
-    },
-    []
-  );
-
-  const totalPages = useMemo(() => Math.ceil(totalRecords / appliedFilters.pageSize), [totalRecords, appliedFilters.pageSize]);
 
   return (
     <div className="">
@@ -168,7 +156,7 @@ const Companies: React.FC<CompaniesProps> = ({
 
       <div className="mt-6 bg-white rounded shadow">
         <Table companies={companies} loading={loading} />
-        <PaginationControls
+        <Pagination
           start={appliedFilters.start}
           length={companies.length}
           totalRecords={totalRecords}

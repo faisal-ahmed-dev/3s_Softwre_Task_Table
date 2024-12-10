@@ -1,5 +1,3 @@
-// src/components/Select.tsx
-
 import React from 'react';
 
 interface Option {
